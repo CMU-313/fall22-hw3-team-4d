@@ -114,102 +114,102 @@ public class FileUtil {
      * @return File ID
      * @throws Exception e
      */
-    public static String createFile(String name, String previousFileId, Path unencryptedFile, long fileSize, String language, String userId, String documentId) throws Exception {
-        // Validate mime type
-        String mimeType;
-        try {
-            mimeType = MimeTypeUtil.guessMimeType(unencryptedFile, name);
-        } catch (IOException e) {
-            throw new IOException("ErrorGuessMime", e);
-        }
+    // public static String createFile(String name, String previousFileId, Path unencryptedFile, long fileSize, String language, String userId, String documentId) throws Exception {
+    //     // Validate mime type
+    //     String mimeType;
+    //     try {
+    //         mimeType = MimeTypeUtil.guessMimeType(unencryptedFile, name);
+    //     } catch (IOException e) {
+    //         throw new IOException("ErrorGuessMime", e);
+    //     }
 
-        // Validate user quota
-        UserDao userDao = new UserDao();
-        User user = userDao.getById(userId);
-        if (user.getStorageCurrent() + fileSize > user.getStorageQuota()) {
-            throw new IOException("QuotaReached");
-        }
+    //     // Validate user quota
+    //     UserDao userDao = new UserDao();
+    //     User user = userDao.getById(userId);
+    //     if (user.getStorageCurrent() + fileSize > user.getStorageQuota()) {
+    //         throw new IOException("QuotaReached");
+    //     }
 
-        // Validate global quota
-        String globalStorageQuotaStr = System.getenv(Constants.GLOBAL_QUOTA_ENV);
-        if (!Strings.isNullOrEmpty(globalStorageQuotaStr)) {
-            long globalStorageQuota = Long.parseLong(globalStorageQuotaStr);
-            long globalStorageCurrent = userDao.getGlobalStorageCurrent();
-            if (globalStorageCurrent + fileSize > globalStorageQuota) {
-                throw new IOException("QuotaReached");
-            }
-        }
+    //     // Validate global quota
+    //     String globalStorageQuotaStr = System.getenv(Constants.GLOBAL_QUOTA_ENV);
+    //     if (!Strings.isNullOrEmpty(globalStorageQuotaStr)) {
+    //         long globalStorageQuota = Long.parseLong(globalStorageQuotaStr);
+    //         long globalStorageCurrent = userDao.getGlobalStorageCurrent();
+    //         if (globalStorageCurrent + fileSize > globalStorageQuota) {
+    //             throw new IOException("QuotaReached");
+    //         }
+    //     }
 
-        // Prepare the file
-        File file = new File();
-        file.setOrder(0);
-        file.setVersion(0);
-        file.setLatestVersion(true);
-        file.setDocumentId(documentId);
-        file.setName(StringUtils.abbreviate(name, 200));
-        file.setMimeType(mimeType);
-        file.setUserId(userId);
+    //     // Prepare the file
+    //     File file = new File();
+    //     file.setOrder(0);
+    //     file.setVersion(0);
+    //     file.setLatestVersion(true);
+    //     file.setDocumentId(documentId);
+    //     file.setName(StringUtils.abbreviate(name, 200));
+    //     file.setMimeType(mimeType);
+    //     file.setUserId(userId);
 
-        // Get files of this document
-        FileDao fileDao = new FileDao();
-        if (documentId != null) {
-            if (previousFileId == null) {
-                // It's not a new version, so put it in last order
-                file.setOrder(fileDao.getByDocumentId(userId, documentId).size());
-            } else {
-                // It's a new version, update the previous version
-                File previousFile = fileDao.getActiveById(previousFileId);
-                if (previousFile == null || !previousFile.getDocumentId().equals(documentId)) {
-                    throw new IOException("Previous version mismatch");
-                }
+    //     // Get files of this document
+    //     FileDao fileDao = new FileDao();
+    //     if (documentId != null) {
+    //         if (previousFileId == null) {
+    //             // It's not a new version, so put it in last order
+    //             file.setOrder(fileDao.getByDocumentId(userId, documentId).size());
+    //         } else {
+    //             // It's a new version, update the previous version
+    //             File previousFile = fileDao.getActiveById(previousFileId);
+    //             if (previousFile == null || !previousFile.getDocumentId().equals(documentId)) {
+    //                 throw new IOException("Previous version mismatch");
+    //             }
 
-                if (previousFile.getVersionId() == null) {
-                    previousFile.setVersionId(UUID.randomUUID().toString());
-                }
+    //             if (previousFile.getVersionId() == null) {
+    //                 previousFile.setVersionId(UUID.randomUUID().toString());
+    //             }
 
-                // Copy the previous file metadata
-                file.setOrder(previousFile.getOrder());
-                file.setVersionId(previousFile.getVersionId());
-                file.setVersion(previousFile.getVersion() + 1);
+    //             // Copy the previous file metadata
+    //             file.setOrder(previousFile.getOrder());
+    //             file.setVersionId(previousFile.getVersionId());
+    //             file.setVersion(previousFile.getVersion() + 1);
 
-                // Update the previous file
-                previousFile.setLatestVersion(false);
-                fileDao.update(previousFile);
-            }
-        }
+    //             // Update the previous file
+    //             previousFile.setLatestVersion(false);
+    //             fileDao.update(previousFile);
+    //         }
+    //     }
 
-        // Create the file
-        String fileId = fileDao.create(file, userId);
+    //     // Create the file
+    //     String fileId = fileDao.create(file, userId);
 
-        // Save the file
-        Cipher cipher = EncryptionUtil.getEncryptionCipher(user.getPrivateKey());
-        Path path = DirectoryUtil.getStorageDirectory().resolve(file.getId());
-        try (InputStream inputStream = Files.newInputStream(unencryptedFile)) {
-            Files.copy(new CipherInputStream(inputStream, cipher), path);
-        }
+    //     // Save the file
+    //     Cipher cipher = EncryptionUtil.getEncryptionCipher(user.getPrivateKey());
+    //     Path path = DirectoryUtil.getStorageDirectory().resolve(file.getId());
+    //     try (InputStream inputStream = Files.newInputStream(unencryptedFile)) {
+    //         Files.copy(new CipherInputStream(inputStream, cipher), path);
+    //     }
 
-        // Update the user quota
-        user.setStorageCurrent(user.getStorageCurrent() + fileSize);
-        userDao.updateQuota(user);
+    //     // Update the user quota
+    //     user.setStorageCurrent(user.getStorageCurrent() + fileSize);
+    //     userDao.updateQuota(user);
 
-        // Raise a new file created event and document updated event if we have a document
-        startProcessingFile(fileId);
-        FileCreatedAsyncEvent fileCreatedAsyncEvent = new FileCreatedAsyncEvent();
-        fileCreatedAsyncEvent.setUserId(userId);
-        fileCreatedAsyncEvent.setLanguage(language);
-        fileCreatedAsyncEvent.setFileId(file.getId());
-        fileCreatedAsyncEvent.setUnencryptedFile(unencryptedFile);
-        ThreadLocalContext.get().addAsyncEvent(fileCreatedAsyncEvent);
+    //     // Raise a new file created event and document updated event if we have a document
+    //     startProcessingFile(fileId);
+    //     FileCreatedAsyncEvent fileCreatedAsyncEvent = new FileCreatedAsyncEvent();
+    //     fileCreatedAsyncEvent.setUserId(userId);
+    //     fileCreatedAsyncEvent.setLanguage(language);
+    //     //fileCreatedAsyncEvent.setFileId(file.getId());
+    //     fileCreatedAsyncEvent.setUnencryptedFile(unencryptedFile);
+    //     ThreadLocalContext.get().addAsyncEvent(fileCreatedAsyncEvent);
 
-        if (documentId != null) {
-            DocumentUpdatedAsyncEvent documentUpdatedAsyncEvent = new DocumentUpdatedAsyncEvent();
-            documentUpdatedAsyncEvent.setUserId(userId);
-            documentUpdatedAsyncEvent.setDocumentId(documentId);
-            ThreadLocalContext.get().addAsyncEvent(documentUpdatedAsyncEvent);
-        }
+    //     if (documentId != null) {
+    //         DocumentUpdatedAsyncEvent documentUpdatedAsyncEvent = new DocumentUpdatedAsyncEvent();
+    //         documentUpdatedAsyncEvent.setUserId(userId);
+    //         documentUpdatedAsyncEvent.setDocumentId(documentId);
+    //         ThreadLocalContext.get().addAsyncEvent(documentUpdatedAsyncEvent);
+    //     }
 
-        return fileId;
-    }
+    //     return fileId;
+    // }
 
     /**
      * Start processing a file.

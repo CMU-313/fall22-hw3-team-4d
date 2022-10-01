@@ -215,7 +215,7 @@ public class DocumentDao {
         documentDb.setRights(document.getRights());
         documentDb.setCreateDate(document.getCreateDate());
         documentDb.setLanguage(document.getLanguage());
-        documentDb.setFileId(document.getFileId());
+        // documentDb.setFileId(document.getFileId());
         documentDb.setUpdateDate(new Date());
         
         // Create audit log
@@ -224,19 +224,19 @@ public class DocumentDao {
         return documentDb;
     }
 
-    /**
-     * Update the file ID on a document.
-     *
-     * @param document Document
-     */
-    public void updateFileId(Document document) {
-        EntityManager em = ThreadLocalContext.get().getEntityManager();
-        Query query = em.createNativeQuery("update T_DOCUMENT d set DOC_IDFILE_C = :fileId, DOC_UPDATEDATE_D = :updateDate where d.DOC_ID_C = :id");
-        query.setParameter("updateDate", new Date());
-        query.setParameter("fileId", document.getFileId());
-        query.setParameter("id", document.getId());
-        query.executeUpdate();
-    }
+    // /**
+    //  * Update the file ID on a document.
+    //  *
+    //  * @param document Document
+    //  */
+    // public void updateFileId(Document document) {
+    //     EntityManager em = ThreadLocalContext.get().getEntityManager();
+    //     Query query = em.createNativeQuery("update T_DOCUMENT d set DOC_IDFILE_C = :fileId, DOC_UPDATEDATE_D = :updateDate where d.DOC_ID_C = :id");
+    //     query.setParameter("updateDate", new Date());
+    //     query.setParameter("fileId", document.getFileId());
+    //     query.setParameter("id", document.getId());
+    //     query.executeUpdate();
+    // }
 
     /**
      * Returns the number of documents.

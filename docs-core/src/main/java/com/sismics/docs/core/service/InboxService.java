@@ -261,8 +261,8 @@ public class InboxService extends AbstractScheduledService {
 
         // Add files to the document
         for (EmailUtil.FileContent fileContent : mailContent.getFileContentList()) {
-            FileUtil.createFile(fileContent.getName(), null, fileContent.getFile(), fileContent.getSize(),
-                    document.getLanguage(), "admin", document.getId());
+            // FileUtil.createFile(fileContent.getName(), null, fileContent.getFile(), fileContent.getSize(),
+            //         document.getLanguage(), "admin", document.getId());
         }
 
         if (ConfigUtil.getConfigBooleanValue(ConfigType.INBOX_DELETE_IMPORTED)) {

@@ -177,15 +177,15 @@ public class LuceneIndexingHandler implements IndexingHandler {
         });
     }
 
-    @Override
-    public void createFiles(List<File> fileList) {
-        handle(indexWriter -> {
-            for (File file : fileList) {
-                org.apache.lucene.document.Document luceneDocument = getDocumentFromFile(file);
-                indexWriter.addDocument(luceneDocument);
-            }
-        });
-    }
+    // @Override
+    // public void createFiles(List<File> fileList) {
+    //     handle(indexWriter -> {
+    //         for (File file : fileList) {
+    //             org.apache.lucene.document.Document luceneDocument = getDocumentFromFile(file);
+    //             indexWriter.addDocument(luceneDocument);
+    //         }
+    //     });
+    // }
 
     @Override
     public void createDocument(final Document document) {
@@ -195,13 +195,13 @@ public class LuceneIndexingHandler implements IndexingHandler {
         });
     }
 
-    @Override
-    public void createFile(final File file) {
-        handle(indexWriter -> {
-            org.apache.lucene.document.Document luceneDocument = getDocumentFromFile(file);
-            indexWriter.addDocument(luceneDocument);
-        });
-    }
+    // @Override
+    // public void createFile(final File file) {
+    //     handle(indexWriter -> {
+    //         org.apache.lucene.document.Document luceneDocument = getDocumentFromFile(file);
+    //         indexWriter.addDocument(luceneDocument);
+    //     });
+    // }
 
     @Override
     public void updateFile(final File file) {
@@ -366,7 +366,7 @@ public class LuceneIndexingHandler implements IndexingHandler {
             documentDto.setDescription((String) o[i++]);
             documentDto.setCreateTimestamp(((Timestamp) o[i++]).getTime());
             documentDto.setLanguage((String) o[i++]);
-            documentDto.setFileId((String) o[i++]);
+            //documentDto.setFileId((String) o[i++]);
             Number shareCount = (Number) o[i++];
             documentDto.setShared(shareCount != null && shareCount.intValue() > 0);
             Number fileCount = (Number) o[i++];

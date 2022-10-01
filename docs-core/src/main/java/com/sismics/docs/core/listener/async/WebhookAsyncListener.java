@@ -54,19 +54,19 @@ public class WebhookAsyncListener {
     @Subscribe
     @AllowConcurrentEvents
     public void on(final FileCreatedAsyncEvent event) {
-        triggerWebhook(WebhookEvent.FILE_CREATED, event.getFileId());
+        //triggerWebhook(WebhookEvent.FILE_CREATED, event.getFileId());
     }
 
     @Subscribe
     @AllowConcurrentEvents
     public void on(final FileUpdatedAsyncEvent event) {
-        triggerWebhook(WebhookEvent.FILE_UPDATED, event.getFileId());
+        //triggerWebhook(WebhookEvent.FILE_UPDATED, event.getFileId());
     }
 
     @Subscribe
     @AllowConcurrentEvents
     public void on(final FileDeletedAsyncEvent event) {
-        triggerWebhook(WebhookEvent.FILE_DELETED, event.getFileId());
+        //triggerWebhook(WebhookEvent.FILE_DELETED, event.getFileId());
     }
 
     /**
