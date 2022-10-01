@@ -114,7 +114,9 @@ public class FileUtil {
      * @return File ID
      * @throws Exception e
      */
-    public static String createFile(String name, String previousFileId, Path unencryptedFile, long fileSize, String language, String userId, String documentId) throws Exception {
+    public static String createFile(String name, String previousFileId, Path unencryptedFile, long fileSize, 
+    //String language, 
+    String userId, String documentId) throws Exception {
         // Validate mime type
         String mimeType;
         try {
@@ -196,7 +198,7 @@ public class FileUtil {
         startProcessingFile(fileId);
         FileCreatedAsyncEvent fileCreatedAsyncEvent = new FileCreatedAsyncEvent();
         fileCreatedAsyncEvent.setUserId(userId);
-        fileCreatedAsyncEvent.setLanguage(language);
+       //fileCreatedAsyncEvent.setLanguage(language);
         fileCreatedAsyncEvent.setFileId(file.getId());
         fileCreatedAsyncEvent.setUnencryptedFile(unencryptedFile);
         ThreadLocalContext.get().addAsyncEvent(fileCreatedAsyncEvent);

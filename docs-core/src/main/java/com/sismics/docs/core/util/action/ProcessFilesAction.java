@@ -47,7 +47,7 @@ public class ProcessFilesAction implements Action {
                 FileUtil.startProcessingFile(file.getId());
                 FileUpdatedAsyncEvent event = new FileUpdatedAsyncEvent();
                 event.setUserId("admin");
-                event.setLanguage(documentDto.getLanguage());
+                //event.setLanguage(documentDto.getLanguage());
                 event.setFileId(file.getId());
                 event.setUnencryptedFile(unencryptedFile);
                 ThreadLocalContext.get().addAsyncEvent(event);
