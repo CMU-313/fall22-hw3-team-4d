@@ -1,7 +1,7 @@
 !H2!SET IGNORECASE TRUE;
 create memory table T_AUTHENTICATION_TOKEN ( AUT_ID_C varchar(36) not null, AUT_IDUSER_C varchar(36) not null, AUT_LONGLASTED_B bit not null, AUT_CREATIONDATE_D datetime not null, AUT_LASTCONNECTIONDATE_D datetime, AUT_IP_C varchar(45), AUT_UA_C varchar(1000), primary key (AUT_ID_C) );
 create memory table T_BASE_FUNCTION ( BAF_ID_C varchar(20) not null, primary key (BAF_ID_C) );
--- create cached table T_FILE ( FIL_ID_C varchar(36) not null, FIL_IDDOC_C varchar(36), FIL_IDUSER_C varchar(36) not null, FIL_MIMETYPE_C varchar(100) not null, FIL_CREATEDATE_D datetime, FIL_DELETEDATE_D datetime, FIL_ORDER_N int, FIL_CONTENT_C longvarchar, primary key (FIL_ID_C) );
+create cached table T_FILE ( FIL_ID_C varchar(36) not null, FIL_IDDOC_C varchar(36), FIL_IDUSER_C varchar(36) not null, FIL_MIMETYPE_C varchar(100) not null, FIL_CREATEDATE_D datetime, FIL_DELETEDATE_D datetime, FIL_ORDER_N int, FIL_CONTENT_C longvarchar, primary key (FIL_ID_C) );
 create memory table T_CONFIG ( CFG_ID_C varchar(50) not null, CFG_VALUE_C varchar(250) not null, primary key (CFG_ID_C) );
 create memory table T_LOCALE ( LOC_ID_C varchar(10) not null, primary key (LOC_ID_C) );
 create cached table T_DOCUMENT ( DOC_ID_C varchar(36) not null, DOC_IDUSER_C varchar(36) not null, DOC_TITLE_C varchar(100) not null, DOC_DESCRIPTION_C varchar(4000), DOC_CREATEDATE_D datetime, DOC_DELETEDATE_D datetime, DOC_LANGUAGE_C varchar(3) default 'fra' not null, primary key (DOC_ID_C) );
@@ -16,8 +16,8 @@ create cached table T_AUDIT_LOG ( LOG_ID_C varchar(36) not null, LOG_IDENTITY_C 
 
 alter table T_AUTHENTICATION_TOKEN add constraint FK_AUT_IDUSER_C foreign key (AUT_IDUSER_C) references T_USER (USE_ID_C) on delete restrict on update restrict;
 alter table T_DOCUMENT add constraint FK_DOC_IDUSER_C foreign key (DOC_IDUSER_C) references T_USER (USE_ID_C) on delete restrict on update restrict;
--- alter table T_FILE add constraint FK_FIL_IDDOC_C foreign key (FIL_IDDOC_C) references T_DOCUMENT (DOC_ID_C) on delete restrict on update restrict;
--- alter table T_FILE add constraint FK_FIL_IDUSER_C foreign key (FIL_IDUSER_C) references T_USER (USE_ID_C) on delete restrict on update restrict;
+alter table T_FILE add constraint FK_FIL_IDDOC_C foreign key (FIL_IDDOC_C) references T_DOCUMENT (DOC_ID_C) on delete restrict on update restrict;
+alter table T_FILE add constraint FK_FIL_IDUSER_C foreign key (FIL_IDUSER_C) references T_USER (USE_ID_C) on delete restrict on update restrict;
 alter table T_USER add constraint FK_USE_IDLOCALE_C foreign key (USE_IDLOCALE_C) references T_LOCALE (LOC_ID_C) on delete restrict on update restrict;
 alter table T_USER add constraint FK_USE_IDROLE_C foreign key (USE_IDROLE_C) references T_ROLE (ROL_ID_C) on delete restrict on update restrict;
 alter table T_TAG add constraint FK_TAG_IDUSER_C foreign key (TAG_IDUSER_C) references T_USER (USE_ID_C) on delete restrict on update restrict;
