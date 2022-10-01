@@ -34,11 +34,11 @@ public class FileDeletedAsyncListener {
         }
 
         // Delete the file from storage
-        FileUtil.delete(event.getFileId());
+        // FileUtil.delete(event.getFileId());
 
-        TransactionUtil.handle(() -> {
-            // Update index
-            AppContext.getInstance().getIndexingHandler().deleteDocument(event.getFileId());
-        });
+        // TransactionUtil.handle(() -> {
+        //     // Update index
+        //     AppContext.getInstance().getIndexingHandler().deleteDocument(event.getFileId());
+        // });
     }
 }

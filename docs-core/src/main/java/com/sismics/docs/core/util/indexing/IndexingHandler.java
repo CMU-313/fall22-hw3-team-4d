@@ -52,7 +52,7 @@ public interface IndexingHandler {
      *
      * @param fileList All files
      */
-    void createFiles(List<File> fileList);
+    // void createFiles(List<File> fileList);
 
     /**
      * Index a new document.
@@ -66,7 +66,7 @@ public interface IndexingHandler {
      *
      * @param file File
      */
-    void createFile(File file);
+    // void createFile(File file);
 
     /**
      * Update an indexed document.

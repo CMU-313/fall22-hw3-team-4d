@@ -25,14 +25,14 @@ public class FileAddEvent {
         this.fileId = fileId;
     }
 
-    /**
-     * Getter of fileId.
-     *
-     * @return fileId
-     */
-    public String getFileId() {
-        return fileId;
-    }
+    // /**
+    //  * Getter of fileId.
+    //  *
+    //  * @return fileId
+    //  */
+    // public String getFileId() {
+    //     return fileId;
+    // }
 
     /**
      * Getter of documentId.

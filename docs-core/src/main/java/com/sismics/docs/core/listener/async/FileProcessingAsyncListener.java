@@ -53,7 +53,7 @@ public class FileProcessingAsyncListener {
             log.info("File created event: " + event.toString());
         }
 
-        processFile(event, true);
+        // processFile(event, true);
     }
 
     /**
@@ -66,66 +66,66 @@ public class FileProcessingAsyncListener {
     public void on(final FileUpdatedAsyncEvent event) {
         log.info("File updated event: " + event.toString());
 
-        processFile(event, false);
+        // processFile(event, false);
     }
 
-    /**
-     * Process a file :
-     * Generate thumbnails
-     * Extract and save text content
-     *
-     * @param event File event
-     * @param isFileCreated True if the file was just created
-     */
-    private void processFile(FileEvent event, boolean isFileCreated) {
-        AtomicReference<File> file = new AtomicReference<>();
-        AtomicReference<User> user = new AtomicReference<>();
+    // /**
+    //  * Process a file :
+    //  * Generate thumbnails
+    //  * Extract and save text content
+    //  *
+    //  * @param event File event
+    //  * @param isFileCreated True if the file was just created
+    //  */
+    // private void processFile(FileEvent event, boolean isFileCreated) {
+    //     AtomicReference<File> file = new AtomicReference<>();
+    //     AtomicReference<User> user = new AtomicReference<>();
 
-        // Open a first transaction to get what we need to start the processing
-        TransactionUtil.handle(() -> {
-            // Generate thumbnail, extract content
-            file.set(new FileDao().getActiveById(event.getFileId()));
-            if (file.get() == null) {
-                // The file has been deleted since
-                return;
-            }
+    //     // Open a first transaction to get what we need to start the processing
+    //     TransactionUtil.handle(() -> {
+    //         // Generate thumbnail, extract content
+    //         file.set(new FileDao().getActiveById(event.getFileId()));
+    //         if (file.get() == null) {
+    //             // The file has been deleted since
+    //             return;
+    //         }
 
-            // Get the creating user from the database for its private key
-            UserDao userDao = new UserDao();
-            user.set(userDao.getById(file.get().getUserId()));
-        });
+    //         // Get the creating user from the database for its private key
+    //         UserDao userDao = new UserDao();
+    //         user.set(userDao.getById(file.get().getUserId()));
+    //     });
 
-        // Process the file outside of a transaction
-        if (user.get() == null || file.get() == null) {
-            // The user or file has been deleted
-            FileUtil.endProcessingFile(event.getFileId());
-            return;
-        }
-        String content = extractContent(event, user.get(), file.get());
+    //     // Process the file outside of a transaction
+    //     if (user.get() == null || file.get() == null) {
+    //         // The user or file has been deleted
+    //         FileUtil.endProcessingFile(event.getFileId());
+    //         return;
+    //     }
+    //     String content = extractContent(event, user.get(), file.get());
 
-        // Open a new transaction to save the file content
-        TransactionUtil.handle(() -> {
-            // Save the file to database
-            FileDao fileDao = new FileDao();
-            File freshFile = fileDao.getActiveById(event.getFileId());
-            if (freshFile == null) {
-                // The file has been deleted since the text extraction started, ignore the result
-                return;
-            }
+    //     // Open a new transaction to save the file content
+    //     TransactionUtil.handle(() -> {
+    //         // Save the file to database
+    //         FileDao fileDao = new FileDao();
+    //         File freshFile = fileDao.getActiveById(event.getFileId());
+    //         if (freshFile == null) {
+    //             // The file has been deleted since the text extraction started, ignore the result
+    //             return;
+    //         }
 
-            freshFile.setContent(content);
-            fileDao.update(freshFile);
+    //         freshFile.setContent(content);
+    //         fileDao.update(freshFile);
 
-            // Update index with the updated file
-            if (isFileCreated) {
-                AppContext.getInstance().getIndexingHandler().createFile(freshFile);
-            } else {
-                AppContext.getInstance().getIndexingHandler().updateFile(freshFile);
-            }
-        });
+    //         // Update index with the updated file
+    //         if (isFileCreated) {
+    //             AppContext.getInstance().getIndexingHandler().createFile(freshFile);
+    //         } else {
+    //             AppContext.getInstance().getIndexingHandler().updateFile(freshFile);
+    //         }
+    //     });
 
-        FileUtil.endProcessingFile(event.getFileId());
-    }
+    //     FileUtil.endProcessingFile(event.getFileId());
+    // }
 
     /**
      * Extract text content from a file.

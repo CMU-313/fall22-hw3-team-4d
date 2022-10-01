@@ -119,14 +119,14 @@ public class DocumentDto {
         this.id = id;
     }
 
-    public String getFileId() {
-        return fileId;
-    }
+    // public String getFileId() {
+    //     return fileId;
+    // }
 
-    public DocumentDto setFileId(String fileId) {
-        this.fileId = fileId;
-        return this;
-    }
+    // public DocumentDto setFileId(String fileId) {
+    //     this.fileId = fileId;
+    //     return this;
+    // }
 
     public String getTitle() {
         return title;
