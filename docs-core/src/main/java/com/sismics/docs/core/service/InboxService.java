@@ -228,7 +228,7 @@ public class InboxService extends AbstractScheduledService {
         document.setSubject(StringUtils.abbreviate(mailContent.getSubject(), 500));
         document.setFormat("EML");
         document.setSource("Inbox");
-        document.setLanguage(ConfigUtil.getConfigStringValue(ConfigType.DEFAULT_LANGUAGE));
+       // document.setLanguage(ConfigUtil.getConfigStringValue(ConfigType.DEFAULT_LANGUAGE));
         if (mailContent.getDate() == null) {
             document.setCreateDate(new Date());
         } else {

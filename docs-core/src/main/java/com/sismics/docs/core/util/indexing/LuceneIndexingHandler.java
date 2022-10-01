@@ -240,7 +240,8 @@ public class LuceneIndexingHandler implements IndexingHandler {
         List<String> criteriaList = new ArrayList<>();
         Map<String, String> documentSearchMap = Maps.newHashMap();
 
-        StringBuilder sb = new StringBuilder("select distinct d.DOC_ID_C c0, d.DOC_TITLE_C c1, d.DOC_DESCRIPTION_C c2, d.DOC_CREATEDATE_D c3, d.DOC_LANGUAGE_C c4, d.DOC_IDFILE_C, ");
+        // d.DOC_LANGUAGE_C c4,
+        StringBuilder sb = new StringBuilder("select distinct d.DOC_ID_C c0, d.DOC_TITLE_C c1, d.DOC_DESCRIPTION_C c2, d.DOC_CREATEDATE_D c3,  d.DOC_IDFILE_C, ");
         sb.append(" s.count c5, ");
         sb.append(" f.count c6, ");
         sb.append(" rs2.RTP_ID_C c7, rs2.RTP_NAME_C, d.DOC_UPDATEDATE_D c8 ");
@@ -333,10 +334,12 @@ public class LuceneIndexingHandler implements IndexingHandler {
             parameterMap.put("mimeType", criteria.getMimeType());
             criteriaList.add("f0.FIL_ID_C is not null");
         }
+        /**
         if (criteria.getLanguage() != null) {
             criteriaList.add("d.DOC_LANGUAGE_C = :language");
             parameterMap.put("language", criteria.getLanguage());
         }
+          */
         if (criteria.getCreatorId() != null) {
             criteriaList.add("d.DOC_IDUSER_C = :creatorId");
             parameterMap.put("creatorId", criteria.getCreatorId());
@@ -365,8 +368,8 @@ public class LuceneIndexingHandler implements IndexingHandler {
             documentDto.setTitle((String) o[i++]);
             documentDto.setDescription((String) o[i++]);
             documentDto.setCreateTimestamp(((Timestamp) o[i++]).getTime());
-            documentDto.setLanguage((String) o[i++]);
             //documentDto.setFileId((String) o[i++]);
+            //documentDto.setLanguage((String) o[i++]);
             Number shareCount = (Number) o[i++];
             documentDto.setShared(shareCount != null && shareCount.intValue() > 0);
             Number fileCount = (Number) o[i++];

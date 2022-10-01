@@ -95,9 +95,11 @@ public class PdfUtil {
                     if (!Strings.isNullOrEmpty(documentDto.getRights())) {
                         pdfPage.addText("Rights: " + documentDto.getRights());
                     }
+                    /**
                     pdfPage.addText("Language: " + documentDto.getLanguage())
                         .newLine()
                         .addText("Files in this document : " + fileList.size(), false, DocsPDType1Font.HELVETICA_BOLD, 12);
+                         */
                 }
             }
             
