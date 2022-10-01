@@ -93,7 +93,7 @@ public class TestFileUtil {
             documentDto.setType("Image");
             documentDto.setCoverage("France");
             documentDto.setRights("Public Domain");
-            documentDto.setLanguage("en");
+            //documentDto.setLanguage("en");
             documentDto.setCreator("user1");
             documentDto.setCreateTimestamp(new Date().getTime());
             
