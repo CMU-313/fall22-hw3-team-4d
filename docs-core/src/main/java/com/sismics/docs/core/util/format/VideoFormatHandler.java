@@ -46,30 +46,30 @@ public class VideoFormatHandler implements FormatHandler {
         }
     }
 
-    @Override
-    public String extractContent(String language, Path file) {
-        List<String> result = Lists.newLinkedList();
-        result.add("mediainfo");
-        result.add(file.toAbsolutePath().toString());
-        ProcessBuilder pb = new ProcessBuilder(result);
-        Process process;
-        try {
-            process = pb.start();
-        } catch (IOException e) {
-            return null;
-        }
+    // @Override
+    // public String extractContent(String language, Path file) {
+    //     List<String> result = Lists.newLinkedList();
+    //     result.add("mediainfo");
+    //     result.add(file.toAbsolutePath().toString());
+    //     ProcessBuilder pb = new ProcessBuilder(result);
+    //     Process process;
+    //     try {
+    //         process = pb.start();
+    //     } catch (IOException e) {
+    //         return null;
+    //     }
 
-        // Consume the process error stream
-        final String commandName = pb.command().get(0);
-        new InputStreamReaderThread(process.getErrorStream(), commandName).start();
+    //     // Consume the process error stream
+    //     final String commandName = pb.command().get(0);
+    //     new InputStreamReaderThread(process.getErrorStream(), commandName).start();
 
-        // Consume the data as a string
-        try (InputStream is = process.getInputStream()) {
-            return new String(ByteStreams.toByteArray(is), StandardCharsets.UTF_8);
-        } catch (Exception e) {
-            return null;
-        }
-    }
+    //     // Consume the data as a string
+    //     try (InputStream is = process.getInputStream()) {
+    //         return new String(ByteStreams.toByteArray(is), StandardCharsets.UTF_8);
+    //     } catch (Exception e) {
+    //         return null;
+    //     }
+    // }
 
     @Override
     public void appendToPdf(Path file, PDDocument doc, boolean fitImageToPage, int margin, MemoryUsageSetting memUsageSettings, Closer closer) {

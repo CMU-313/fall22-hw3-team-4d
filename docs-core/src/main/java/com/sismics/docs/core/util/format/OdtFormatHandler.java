@@ -37,11 +37,11 @@ public class OdtFormatHandler implements FormatHandler {
         return new PdfFormatHandler().generateThumbnail(getGeneratedPdf(file));
     }
 
-    @Override
-    public String extractContent(String language, Path file) throws Exception {
-        // Use the PDF format handler
-        return new PdfFormatHandler().extractContent(language, getGeneratedPdf(file));
-    }
+    // @Override
+    // public String extractContent(String language, Path file) throws Exception {
+    //     // Use the PDF format handler
+    //     return new PdfFormatHandler().extractContent(language, getGeneratedPdf(file));
+    // }
 
     @Override
     public void appendToPdf(Path file, PDDocument doc, boolean fitImageToPage, int margin, MemoryUsageSetting memUsageSettings, Closer closer) throws Exception {
