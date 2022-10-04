@@ -45,10 +45,10 @@ public class TextPlainFormatHandler implements FormatHandler {
         return new PdfFormatHandler().generateThumbnail(tempFile);
     }
 
-    @Override
-    public String extractContent(String language, Path file) throws Exception {
-        return Files.readString(file, StandardCharsets.UTF_8);
-    }
+    // @Override
+    // public String extractContent(String language, Path file) throws Exception {
+    //     return Files.readString(file, StandardCharsets.UTF_8);
+    // }
 
     @Override
     public void appendToPdf(Path file, PDDocument doc, boolean fitImageToPage, int margin, MemoryUsageSetting memUsageSettings, Closer closer) {

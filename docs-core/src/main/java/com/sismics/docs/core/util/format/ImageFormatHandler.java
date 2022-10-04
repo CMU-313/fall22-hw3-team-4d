@@ -43,16 +43,16 @@ public class ImageFormatHandler implements FormatHandler {
         }
     }
 
-    @Override
-    public String extractContent(String language, Path file) throws Exception {
-        if (language == null) {
-            return null;
-        }
+    // @Override
+    // public String extractContent(String language, Path file) throws Exception {
+    //     if (language == null) {
+    //         return null;
+    //     }
 
-        try (InputStream inputStream = Files.newInputStream(file)) {
-            return FileUtil.ocrFile(language, ImageIO.read(inputStream));
-        }
-    }
+    //     try (InputStream inputStream = Files.newInputStream(file)) {
+    //         return FileUtil.ocrFile(language, ImageIO.read(inputStream));
+    //     }
+    // }
 
     @Override
     public void appendToPdf(Path file, PDDocument doc, boolean fitImageToPage, int margin, MemoryUsageSetting memUsageSettings, Closer closer) throws Exception {

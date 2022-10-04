@@ -42,35 +42,35 @@ public class PdfFormatHandler implements FormatHandler {
         }
     }
 
-    @Override
-    public String extractContent(String language, Path file) {
-        String content = null;
-        try (InputStream inputStream = Files.newInputStream(file);
-             PDDocument pdfDocument = PDDocument.load(inputStream)) {
-            content = new PDFTextStripper().getText(pdfDocument);
-        } catch (Exception e) {
-            log.error("Error while extracting text from the PDF", e);
-        }
+    // @Override
+    // public String extractContent(String language, Path file) {
+    //     String content = null;
+    //     try (InputStream inputStream = Files.newInputStream(file);
+    //          PDDocument pdfDocument = PDDocument.load(inputStream)) {
+    //         content = new PDFTextStripper().getText(pdfDocument);
+    //     } catch (Exception e) {
+    //         log.error("Error while extracting text from the PDF", e);
+    //     }
 
-        // No text content, try to OCR it
-        if (language != null && content != null && content.trim().isEmpty()) {
-            StringBuilder sb = new StringBuilder();
-            try (InputStream inputStream = Files.newInputStream(file);
-                 PDDocument pdfDocument = PDDocument.load(inputStream)) {
-                PDFRenderer renderer = new PDFRenderer(pdfDocument);
-                for (int pageIndex = 0; pageIndex < pdfDocument.getNumberOfPages(); pageIndex++) {
-                    log.info("OCR page " + (pageIndex + 1) + "/" + pdfDocument.getNumberOfPages() + " of PDF file containing only images");
-                    sb.append(" ");
-                    sb.append(FileUtil.ocrFile(language, renderer.renderImageWithDPI(pageIndex, 300, ImageType.GRAY)));
-                }
-                return sb.toString();
-            } catch (Exception e) {
-                log.error("Error while OCR-izing the PDF", e);
-            }
-        }
+    //     // No text content, try to OCR it
+    //     if (language != null && content != null && content.trim().isEmpty()) {
+    //         StringBuilder sb = new StringBuilder();
+    //         try (InputStream inputStream = Files.newInputStream(file);
+    //              PDDocument pdfDocument = PDDocument.load(inputStream)) {
+    //             PDFRenderer renderer = new PDFRenderer(pdfDocument);
+    //             for (int pageIndex = 0; pageIndex < pdfDocument.getNumberOfPages(); pageIndex++) {
+    //                 log.info("OCR page " + (pageIndex + 1) + "/" + pdfDocument.getNumberOfPages() + " of PDF file containing only images");
+    //                 sb.append(" ");
+    //                 sb.append(FileUtil.ocrFile(language, renderer.renderImageWithDPI(pageIndex, 300, ImageType.GRAY)));
+    //             }
+    //             return sb.toString();
+    //         } catch (Exception e) {
+    //             log.error("Error while OCR-izing the PDF", e);
+    //         }
+    //     }
 
-        return content;
-    }
+    //     return content;
+    // }
 
     @Override
     public void appendToPdf(Path file, PDDocument doc, boolean fitImageToPage, int margin, MemoryUsageSetting memUsageSettings, Closer closer) throws Exception {

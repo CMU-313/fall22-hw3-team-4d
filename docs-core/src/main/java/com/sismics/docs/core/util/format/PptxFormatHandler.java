@@ -47,11 +47,11 @@ public class PptxFormatHandler implements FormatHandler {
         return null;
     }
 
-    @Override
-    public String extractContent(String language, Path file) throws Exception {
-        XMLSlideShow pptx = loadPPtxFile(file);
-        return new SlideShowExtractor<>(pptx).getText();
-    }
+    // @Override
+    // public String extractContent(String language, Path file) throws Exception {
+    //     XMLSlideShow pptx = loadPPtxFile(file);
+    //     return new SlideShowExtractor<>(pptx).getText();
+    // }
 
     @Override
     public void appendToPdf(Path file, PDDocument doc, boolean fitImageToPage, int margin, MemoryUsageSetting memUsageSettings, Closer closer) throws Exception {

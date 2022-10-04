@@ -30,15 +30,15 @@ public interface FormatHandler {
      */
     BufferedImage generateThumbnail(Path file) throws Exception;
 
-    /**
-     * Extract text content.
-     *
-     * @param language Language
-     * @param file File
-     * @return Text content
-     * @throws Exception e
-     */
-    String extractContent(String language, Path file) throws Exception;
+    // /**
+    //  * Extract text content.
+    //  *
+    //  * @param language Language
+    //  * @param file File
+    //  * @return Text content
+    //  * @throws Exception e
+    //  */
+    // String extractContent(String language, Path file) throws Exception;
 
     /**
      * Append to a PDF.
