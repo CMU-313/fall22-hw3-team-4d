@@ -86,8 +86,9 @@ public class DocumentDao {
             return null;
         }
 
+        //d.DOC_LANGUAGE_C,
         EntityManager em = ThreadLocalContext.get().getEntityManager();
-        StringBuilder sb = new StringBuilder("select distinct d.DOC_ID_C, d.DOC_TITLE_C, d.DOC_DESCRIPTION_C, d.DOC_SUBJECT_C, d.DOC_IDENTIFIER_C, d.DOC_PUBLISHER_C, d.DOC_FORMAT_C, d.DOC_SOURCE_C, d.DOC_TYPE_C, d.DOC_COVERAGE_C, d.DOC_RIGHTS_C, d.DOC_CREATEDATE_D, d.DOC_UPDATEDATE_D, d.DOC_LANGUAGE_C, ");
+        StringBuilder sb = new StringBuilder("select distinct d.DOC_ID_C, d.DOC_TITLE_C, d.DOC_DESCRIPTION_C, d.DOC_SUBJECT_C, d.DOC_IDENTIFIER_C, d.DOC_PUBLISHER_C, d.DOC_FORMAT_C, d.DOC_SOURCE_C, d.DOC_TYPE_C, d.DOC_COVERAGE_C, d.DOC_RIGHTS_C, d.DOC_CREATEDATE_D, d.DOC_UPDATEDATE_D, ");
         sb.append(" (select count(s.SHA_ID_C) from T_SHARE s, T_ACL ac where ac.ACL_SOURCEID_C = d.DOC_ID_C and ac.ACL_TARGETID_C = s.SHA_ID_C and ac.ACL_DELETEDATE_D is null and s.SHA_DELETEDATE_D is null) shareCount, ");
         sb.append(" (select count(f.FIL_ID_C) from T_FILE f where f.FIL_DELETEDATE_D is null and f.FIL_IDDOC_C = d.DOC_ID_C) fileCount, ");
         sb.append(" u.USE_USERNAME_C ");
@@ -224,19 +225,20 @@ public class DocumentDao {
         return documentDb;
     }
 
-    // /**
-    //  * Update the file ID on a document.
-    //  *
-    //  * @param document Document
-    //  */
-    // public void updateFileId(Document document) {
-    //     EntityManager em = ThreadLocalContext.get().getEntityManager();
-    //     Query query = em.createNativeQuery("update T_DOCUMENT d set DOC_IDFILE_C = :fileId, DOC_UPDATEDATE_D = :updateDate where d.DOC_ID_C = :id");
-    //     query.setParameter("updateDate", new Date());
-    //     query.setParameter("fileId", document.getFileId());
-    //     query.setParameter("id", document.getId());
-    //     query.executeUpdate();
-    // }
+    /**
+     * Update the file ID on a document.
+     *
+     * @param document Document
+     */
+    //  DOC_IDFILE_C = :fileId,
+    public void updateFileId(Document document) {
+        EntityManager em = ThreadLocalContext.get().getEntityManager();
+        Query query = em.createNativeQuery("update T_DOCUMENT d set DOC_UPDATEDATE_D = :updateDate where d.DOC_ID_C = :id");
+        query.setParameter("updateDate", new Date());
+        //query.setParameter("fileId", document.getFileId());
+        query.setParameter("id", document.getId());
+        query.executeUpdate();
+    }
 
     /**
      * Returns the number of documents.
