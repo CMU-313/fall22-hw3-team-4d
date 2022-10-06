@@ -698,7 +698,6 @@ public class DocumentResource extends BaseResource {
      * @apiError (client) ValidationError Validation error
      * @apiPermission user
      * @apiVersion 1.5.0
-     * param language Language
      *
      * @param title Title
      * @param description Description
@@ -714,6 +713,7 @@ public class DocumentResource extends BaseResource {
      * @param relationList Relations
      * @param metadataIdList Metadata ID list
      * @param metadataValueList Metadata value list
+     * @param language Language
      * @param createDateStr Creation date
      * @return Response
      */
@@ -733,7 +733,7 @@ public class DocumentResource extends BaseResource {
             @FormParam("relations") List<String> relationList,
             @FormParam("metadata_id") List<String> metadataIdList,
             @FormParam("metadata_value") List<String> metadataValueList,
-            //@FormParam("language") String language,
+            @FormParam("language") String language,
             @FormParam("create_date") String createDateStr) {
         if (!authenticate()) {
             throw new ForbiddenClientException();
@@ -741,7 +741,7 @@ public class DocumentResource extends BaseResource {
         
         // Validate input data
         title = ValidationUtil.validateLength(title, "title", 1, 100, false);
-        //language = ValidationUtil.validateLength(language, "language", 3, 7, false);
+        language = ValidationUtil.validateLength(language, "language", 3, 7, false);
         description = ValidationUtil.validateLength(description, "description", 0, 4000, true);
         subject = ValidationUtil.validateLength(subject, "subject", 0, 500, true);
         identifier = ValidationUtil.validateLength(identifier, "identifier", 0, 500, true);
@@ -752,9 +752,9 @@ public class DocumentResource extends BaseResource {
         coverage = ValidationUtil.validateLength(coverage, "coverage", 0, 100, true);
         rights = ValidationUtil.validateLength(rights, "rights", 0, 100, true);
         Date createDate = ValidationUtil.validateDate(createDateStr, "create_date", true);
-        // if (!Constants.SUPPORTED_LANGUAGES.contains(language)) {
-        //     throw new ClientException("ValidationError", MessageFormat.format("{0} is not a supported language", language));
-        // }
+        if (!Constants.SUPPORTED_LANGUAGES.contains(language)) {
+            throw new ClientException("ValidationError", MessageFormat.format("{0} is not a supported language", language));
+        }
 
         // Create the document
         Document document = new Document();
@@ -855,7 +855,7 @@ public class DocumentResource extends BaseResource {
             @FormParam("relations") List<String> relationList,
             @FormParam("metadata_id") List<String> metadataIdList,
             @FormParam("metadata_value") List<String> metadataValueList,
-            // @FormParam("language") String language,
+            @FormParam("language") String language,
             @FormParam("create_date") String createDateStr) {
         if (!authenticate()) {
             throw new ForbiddenClientException();
@@ -863,7 +863,7 @@ public class DocumentResource extends BaseResource {
         
         // Validate input data
         title = ValidationUtil.validateLength(title, "title", 1, 100, false);
-        // language = ValidationUtil.validateLength(language, "language", 3, 7, false);
+        language = ValidationUtil.validateLength(language, "language", 3, 7, false);
         description = ValidationUtil.validateLength(description, "description", 0, 4000, true);
         subject = ValidationUtil.validateLength(subject, "subject", 0, 500, true);
         identifier = ValidationUtil.validateLength(identifier, "identifier", 0, 500, true);
@@ -874,9 +874,9 @@ public class DocumentResource extends BaseResource {
         coverage = ValidationUtil.validateLength(coverage, "coverage", 0, 100, true);
         rights = ValidationUtil.validateLength(rights, "rights", 0, 100, true);
         Date createDate = ValidationUtil.validateDate(createDateStr, "create_date", true);
-        // if (language != null && !Constants.SUPPORTED_LANGUAGES.contains(language)) {
-        //     throw new ClientException("ValidationError", MessageFormat.format("{0} is not a supported language", language));
-        // }
+        if (language != null && !Constants.SUPPORTED_LANGUAGES.contains(language)) {
+            throw new ClientException("ValidationError", MessageFormat.format("{0} is not a supported language", language));
+        }
         
         // Check write permission
         AclDao aclDao = new AclDao();
