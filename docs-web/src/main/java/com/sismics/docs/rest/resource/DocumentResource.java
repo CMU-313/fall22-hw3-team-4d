@@ -456,7 +456,7 @@ public class DocumentResource extends BaseResource {
             JsonObjectBuilder documentObjectBuilder = Json.createObjectBuilder()
                     .add("id", documentDto.getId())
                     .add("highlight", JsonUtil.nullable(documentDto.getHighlight()))
-                    //.add("file_id", JsonUtil.nullable(documentDto.getFileId()))
+                    .add("file_id", JsonUtil.nullable(documentDto.getFileId()))
                     .add("title", documentDto.getTitle())
                     .add("description", JsonUtil.nullable(documentDto.getDescription()))
                     .add("create_date", documentDto.getCreateTimestamp())
@@ -1018,11 +1018,11 @@ public class DocumentResource extends BaseResource {
         // Add files to the document
         try {
             for (EmailUtil.FileContent fileContent : mailContent.getFileContentList()) {
-                // FileUtil.createFile(fileContent.getName(), null, fileContent.getFile(), fileContent.getSize(),
-                //         document.getLanguage(), principal.getId(), document.getId());
+                FileUtil.createFile(fileContent.getName(), null, fileContent.getFile(), fileContent.getSize(),
+                        document.getLanguage(), principal.getId(), document.getId());
             }
-        // } catch (IOException e) {
-        //     throw new ClientException(e.getMessage(), e.getMessage(), e);
+        } catch (IOException e) {
+            throw new ClientException(e.getMessage(), e.getMessage(), e);
         } catch (Exception e) {
             throw new ServerException("FileError", "Error adding a file", e);
         }
@@ -1081,7 +1081,7 @@ public class DocumentResource extends BaseResource {
             // Raise file deleted event
             FileDeletedAsyncEvent fileDeletedAsyncEvent = new FileDeletedAsyncEvent();
             fileDeletedAsyncEvent.setUserId(principal.getId());
-            //fileDeletedAsyncEvent.setFileId(file.getId());
+            fileDeletedAsyncEvent.setFileId(file.getId());
             ThreadLocalContext.get().addAsyncEvent(fileDeletedAsyncEvent);
         }
 

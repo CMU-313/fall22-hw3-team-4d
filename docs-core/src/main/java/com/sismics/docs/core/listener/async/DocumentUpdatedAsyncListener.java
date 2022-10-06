@@ -51,14 +51,14 @@ public class DocumentUpdatedAsyncListener {
             // Set the main file
             FileDao fileDao = new FileDao();
             List<File> fileList = fileDao.getByDocumentId(null, event.getDocumentId());
-            // if (fileList.isEmpty()) {
-            //     document.setFileId(null);
-            // } else {
-            //     document.setFileId(fileList.get(0).getId());
-            // }
+            if (fileList.isEmpty()) {
+                document.setFileId(null);
+            } else {
+                document.setFileId(fileList.get(0).getId());
+            }
 
             // Update database and index
-            // documentDao.updateFileId(document);
+            documentDao.updateFileId(document);
             AppContext.getInstance().getIndexingHandler().updateDocument(document);
 
             // Update contributors list
