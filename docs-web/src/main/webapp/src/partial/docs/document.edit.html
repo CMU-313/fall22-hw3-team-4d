@@ -20,10 +20,10 @@
     <fieldset>
       <legend>{{ 'document.edit.primary_metadata' | translate }}</legend>
       <div class="form-group" ng-class="{ 'has-error': !documentForm.title.$valid && documentForm.$dirty }">
-        <label class="col-sm-2 control-label" for="inputTitle">{{ 'document.title' | translate }}</label>
+        <label class="col-sm-2 control-label" for="inputTitle">{{ 'document.fname' | translate }}</label>
         <div class="col-sm-10">
           <input required ng-maxlength="100" class="form-control" type="text" id="inputTitle"
-            ng-attr-placeholder="{{ 'document.edit.title_placeholder' | translate }}" name="title" ng-model="document.title" autocomplete="off"
+            ng-attr-placeholder="{{ 'document.edit.fname_placeholder' | translate }}" name="title" ng-model="document.title" autocomplete="off"
             uib-typeahead="document for document in getTitleTypeahead($viewValue)"
             typeahead-wait-ms="200" ng-disabled="fileIsUploading" />
         </div>
