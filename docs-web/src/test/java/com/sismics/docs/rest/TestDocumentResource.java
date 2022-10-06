@@ -104,7 +104,7 @@ public class TestDocumentResource extends BaseJerseyTest {
         
         // List all documents
         json = target().path("/document/list")
-                .queryParam("sort_column", 3)
+                .queryParam("sort_column", 2)
                 .queryParam("asc", true)
                 .request()
                 .cookie(TokenBasedSecurityFilter.COOKIE_NAME, document1Token)
