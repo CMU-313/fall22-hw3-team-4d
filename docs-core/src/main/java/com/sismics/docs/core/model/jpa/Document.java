@@ -54,6 +54,12 @@ public class Document implements Loggable {
     private String description;
     
     /**
+     * Rating.
+     */
+    @Column(name = "DOC_RATING_C", length = 5)
+    private String rating;
+
+    /**
      * Subject.
      */
     @Column(name = "DOC_SUBJECT_C", length = 500)
@@ -166,6 +172,14 @@ public class Document implements Loggable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getRating() {
+        return rating;
+    }
+
+    public void setRating(String rating) {
+        this.rating = rating;
     }
     
     public String getSubject() {
