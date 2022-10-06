@@ -203,7 +203,7 @@ public class FileResource extends BaseResource {
             FileUtil.startProcessingFile(id);
             FileUpdatedAsyncEvent fileUpdatedAsyncEvent = new FileUpdatedAsyncEvent();
             fileUpdatedAsyncEvent.setUserId(principal.getId());
-            //fileUpdatedAsyncEvent.setLanguage(documentDto.getLanguage());
+            fileUpdatedAsyncEvent.setLanguage(documentDto.getLanguage());
             //fileUpdatedAsyncEvent.setFileId(file.getId());
             fileUpdatedAsyncEvent.setUnencryptedFile(unencryptedFile);
             ThreadLocalContext.get().addAsyncEvent(fileUpdatedAsyncEvent);
@@ -311,7 +311,7 @@ public class FileResource extends BaseResource {
             FileUtil.startProcessingFile(id);
             FileUpdatedAsyncEvent event = new FileUpdatedAsyncEvent();
             event.setUserId(principal.getId());
-            //event.setLanguage(documentDto.getLanguage());
+            event.setLanguage(documentDto.getLanguage());
             //event.setFileId(file.getId());
             event.setUnencryptedFile(unencryptedFile);
             ThreadLocalContext.get().addAsyncEvent(event);

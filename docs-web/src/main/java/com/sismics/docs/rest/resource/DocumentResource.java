@@ -171,7 +171,7 @@ public class DocumentResource extends BaseResource {
                 .add("description", JsonUtil.nullable(documentDto.getDescription()))
                 .add("create_date", documentDto.getCreateTimestamp())
                 .add("update_date", documentDto.getUpdateTimestamp())
-                //.add("language", documentDto.getLanguage())
+                .add("language", documentDto.getLanguage())
                 .add("shared", documentDto.getShared())
                 .add("file_count", documentDto.getFileCount());
 
@@ -461,7 +461,7 @@ public class DocumentResource extends BaseResource {
                     .add("description", JsonUtil.nullable(documentDto.getDescription()))
                     .add("create_date", documentDto.getCreateTimestamp())
                     .add("update_date", documentDto.getUpdateTimestamp())
-                    //.add("language", documentDto.getLanguage())
+                    .add("language", documentDto.getLanguage())
                     .add("shared", documentDto.getShared())
                     .add("active_route", documentDto.isActiveRoute())
                     .add("current_step_name", JsonUtil.nullable(documentDto.getCurrentStepName()))
@@ -620,15 +620,15 @@ public class DocumentResource extends BaseResource {
                     // New shared state criteria
                     documentCriteria.setShared(paramValue.equals("yes"));
                     break;
-                //case "lang":
+                case "lang":
                     // New language criteria
-                    //if (Constants.SUPPORTED_LANGUAGES.contains(paramValue)) {
-                      //  documentCriteria.setLanguage(paramValue);
-                   // } else {
+                    if (Constants.SUPPORTED_LANGUAGES.contains(paramValue)) {
+                        documentCriteria.setLanguage(paramValue);
+                    } else {
                         // Unsupported language, returns no documents
-                       // documentCriteria.setLanguage(UUID.randomUUID().toString());
-                   // }
-                    //break;
+                        documentCriteria.setLanguage(UUID.randomUUID().toString());
+                    }
+                    break;
                 case "mime":
                     // New mime type criteria
                     documentCriteria.setMimeType(paramValue);
@@ -769,7 +769,7 @@ public class DocumentResource extends BaseResource {
         document.setType(type);
         document.setCoverage(coverage);
         document.setRights(rights);
-        //document.setLanguage(language);
+        document.setLanguage(language);
         if (createDate == null) {
             document.setCreateDate(new Date());
         } else {
@@ -902,7 +902,7 @@ public class DocumentResource extends BaseResource {
         document.setType(type);
         document.setCoverage(coverage);
         document.setRights(rights);
-        //document.setLanguage(language);
+        document.setLanguage(language);
         if (createDate == null) {
             document.setCreateDate(new Date());
         } else {
@@ -999,7 +999,7 @@ public class DocumentResource extends BaseResource {
         document.setSubject(StringUtils.abbreviate(mailContent.getSubject(), 500));
         document.setFormat("EML");
         document.setSource("Email");
-       // document.setLanguage(ConfigUtil.getConfigStringValue(ConfigType.DEFAULT_LANGUAGE));
+        document.setLanguage(ConfigUtil.getConfigStringValue(ConfigType.DEFAULT_LANGUAGE));
         if (mailContent.getDate() == null) {
             document.setCreateDate(new Date());
         } else {
