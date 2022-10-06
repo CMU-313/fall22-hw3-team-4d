@@ -77,7 +77,7 @@ public class TestDocumentResource extends BaseJerseyTest {
                         .param("rights", "Public Domain")
                         .param("tags", tag1Id)
                         .param("tags", tag2Id)
-                        // .param("language", "eng")
+                        //.param("language", "eng")
                         .param("create_date", Long.toString(create1Date))), JsonObject.class);
         String document1Id = json.getString("id");
         Assert.assertNotNull(document1Id);
@@ -87,15 +87,15 @@ public class TestDocumentResource extends BaseJerseyTest {
                 .cookie(TokenBasedSecurityFilter.COOKIE_NAME, document1Token)
                 .put(Entity.form(new Form()
                         .param("title", "My super title document 2")
-                        // .param("language", "eng")
+                        //.param("language", "eng")
                         .param("tags", tag2Id)
                         .param("relations", document1Id)), JsonObject.class);
         String document2Id = json.getString("id");
         Assert.assertNotNull(document2Id);
-
+        
         // Add a file
-        // String file1Id = clientUtil.addFileToDocument(FILE_EINSTEIN_ROOSEVELT_LETTER_PNG,
-        //         document1Token, document1Id);
+        //String file1Id = clientUtil.addFileToDocument(FILE_EINSTEIN_ROOSEVELT_LETTER_PNG,
+                //document1Token, document1Id);
 
         // Share this document
         target().path("/share").request()
@@ -114,9 +114,9 @@ public class TestDocumentResource extends BaseJerseyTest {
         Assert.assertEquals(2, documents.size());
         Assert.assertNotNull(documents.getJsonObject(0).get("update_date"));
         Assert.assertEquals(document1Id, documents.getJsonObject(0).getString("id"));
-        // Assert.assertEquals("eng", documents.getJsonObject(0).getString("language"));
-        // Assert.assertEquals(file1Id, documents.getJsonObject(0).getString("file_id"));
-        // Assert.assertEquals(1, documents.getJsonObject(0).getInt("file_count"));
+        //Assert.assertEquals("eng", documents.getJsonObject(0).getString("language"));
+        Assert.assertEquals(file1Id, documents.getJsonObject(0).getString("file_id"));
+        //Assert.assertEquals(1, documents.getJsonObject(0).getInt("file_count"));
         Assert.assertEquals(2, tags.size());
         Assert.assertEquals(tag2Id, tags.getJsonObject(0).getString("id"));
         Assert.assertEquals("HR", tags.getJsonObject(0).getString("name"));
@@ -296,7 +296,7 @@ public class TestDocumentResource extends BaseJerseyTest {
                         .param("source", "My new source for document 1")
                         .param("type", "Image")
                         .param("coverage", "France")
-                        // .param("language", "eng")
+                        //.param("language", "eng")
                         .param("rights", "All Rights Reserved")
                         .param("tags", tag3Id)), JsonObject.class);
         Assert.assertEquals(document1Id, json.getString("id"));
@@ -305,8 +305,8 @@ public class TestDocumentResource extends BaseJerseyTest {
         json = target().path("/document/" + document2Id).request()
                 .cookie(TokenBasedSecurityFilter.COOKIE_NAME, document1Token)
                 .post(Entity.form(new Form()
-                        .param("title", "My super title document 2")), JsonObject.class);
-                        //.param("language", "eng")
+                        .param("title", "My super title document 2")
+                        //.param("language", "eng")), JsonObject.class);
         Assert.assertEquals(document2Id, json.getString("id"));
 
         // Export a document in PDF format
@@ -406,12 +406,12 @@ public class TestDocumentResource extends BaseJerseyTest {
         Assert.assertEquals(Status.NOT_FOUND, Status.fromStatusCode(response.getStatus()));
 
         // Check that the associated files are deleted from FS
-        // java.io.File storedFile = DirectoryUtil.getStorageDirectory().resolve(file1Id).toFile();
-        // java.io.File webFile = DirectoryUtil.getStorageDirectory().resolve(file1Id + "_web").toFile();
-        // java.io.File thumbnailFile = DirectoryUtil.getStorageDirectory().resolve(file1Id + "_thumb").toFile();
-        // Assert.assertFalse(storedFile.exists());
-        // Assert.assertFalse(webFile.exists());
-        // Assert.assertFalse(thumbnailFile.exists());
+        java.io.File storedFile = DirectoryUtil.getStorageDirectory().resolve(file1Id).toFile();
+        java.io.File webFile = DirectoryUtil.getStorageDirectory().resolve(file1Id + "_web").toFile();
+        java.io.File thumbnailFile = DirectoryUtil.getStorageDirectory().resolve(file1Id + "_thumb").toFile();
+        Assert.assertFalse(storedFile.exists());
+        Assert.assertFalse(webFile.exists());
+        Assert.assertFalse(thumbnailFile.exists());
         
         // Get a document (KO)
         response = target().path("/document/" + document1Id).request()
@@ -851,7 +851,7 @@ public class TestDocumentResource extends BaseJerseyTest {
                 .cookie(TokenBasedSecurityFilter.COOKIE_NAME, metadata1Token)
                 .put(Entity.form(new Form()
                         .param("title", "Metadata 1")
-                        .param("language", "eng")
+                        //.param("language", "eng")
                         .param("metadata_id", metadataStrId)
                         .param("metadata_id", metadataIntId)
                         .param("metadata_id", metadataFloatId)
@@ -898,7 +898,7 @@ public class TestDocumentResource extends BaseJerseyTest {
                 .cookie(TokenBasedSecurityFilter.COOKIE_NAME, metadata1Token)
                 .post(Entity.form(new Form()
                         .param("title", "Metadata 1")
-                        .param("language", "eng")
+                        /.param("language", "eng")
                         .param("metadata_id", metadataStrId)
                         .param("metadata_id", metadataIntId)
                         .param("metadata_id", metadataFloatId)
@@ -947,7 +947,7 @@ public class TestDocumentResource extends BaseJerseyTest {
                 .cookie(TokenBasedSecurityFilter.COOKIE_NAME, metadata1Token)
                 .post(Entity.form(new Form()
                         .param("title", "Metadata 1")
-                        .param("language", "eng")
+                        /.param("language", "eng")
                         .param("metadata_id", metadataFloatId)
                         .param("metadata_id", metadataDateId)
                         .param("metadata_id", metadataBoolId)
