@@ -750,7 +750,7 @@ public class DocumentResource extends BaseResource {
         title = ValidationUtil.validateLength(title, "title", 1, 100, false);
         language = ValidationUtil.validateLength(language, "language", 3, 7, false);
         description = ValidationUtil.validateLength(description, "description", 0, 4000, true);
-        rating = ValidationUtil.validateLength(rating, "rating", 1, 5, false);
+        rating = ValidationUtil.validateLength(rating, "rating", 1, 5, true);
         subject = ValidationUtil.validateLength(subject, "subject", 0, 500, true);
         identifier = ValidationUtil.validateLength(identifier, "identifier", 0, 500, true);
         publisher = ValidationUtil.validateLength(publisher, "publisher", 0, 500, true);
@@ -876,7 +876,7 @@ public class DocumentResource extends BaseResource {
         title = ValidationUtil.validateLength(title, "title", 1, 100, false);
         language = ValidationUtil.validateLength(language, "language", 3, 7, false);
         description = ValidationUtil.validateLength(description, "description", 0, 4000, true);
-        rating = ValidationUtil.validateLength(rating, "rating", 1, 5, false);
+        rating = ValidationUtil.validateLength(rating, "rating", 1, 5, true);
         subject = ValidationUtil.validateLength(subject, "subject", 0, 500, true);
         identifier = ValidationUtil.validateLength(identifier, "identifier", 0, 500, true);
         publisher = ValidationUtil.validateLength(publisher, "publisher", 0, 500, true);

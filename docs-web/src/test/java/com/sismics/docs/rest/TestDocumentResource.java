@@ -67,6 +67,7 @@ public class TestDocumentResource extends BaseJerseyTest {
                 .put(Entity.form(new Form()
                         .param("title", "My super title document 1")
                         .param("description", "My super description for document 1")
+                        .param("rating", "1")
                         .param("subject", "Subject document 1")
                         .param("identifier", "Identifier document 1")
                         .param("publisher", "Publisher document 1")
