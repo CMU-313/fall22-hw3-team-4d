@@ -66,7 +66,7 @@ public class DocumentCriteria {
     /**
      * Language.
      */
-    //private String language;
+    private String language;
     
     /**
      * Creator ID.
@@ -144,7 +144,6 @@ public class DocumentCriteria {
         this.shared = shared;
     }
 
-    /** 
     public String getLanguage() {
         return language;
     }
@@ -152,7 +151,7 @@ public class DocumentCriteria {
     public void setLanguage(String language) {
         this.language = language;
     }
-*/
+
     public String getCreatorId() {
         return creatorId;
     }

@@ -69,7 +69,7 @@ public class DocumentDto {
     /**
      * Language.
      */
-    //private String language;
+    private String language;
     
     /**
      * Creation date.
@@ -224,7 +224,6 @@ public class DocumentDto {
         this.shared = shared;
     }
 
-    /** 
     public String getLanguage() {
         return language;
     }
@@ -232,7 +231,7 @@ public class DocumentDto {
     public void setLanguage(String language) {
         this.language = language;
     }
-    */
+
     public Integer getFileCount() {
         return fileCount;
     }
