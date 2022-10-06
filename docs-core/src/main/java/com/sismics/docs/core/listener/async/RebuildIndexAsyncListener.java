@@ -59,7 +59,7 @@ public class RebuildIndexAsyncListener {
             List<File> fileList;
             do {
                 fileList = fileDao.findAll(offset, 100);
-                //AppContext.getInstance().getIndexingHandler().createFiles(fileList);
+                AppContext.getInstance().getIndexingHandler().createFiles(fileList);
                 offset += 100;
             } while (fileList.size() > 0);
         });
