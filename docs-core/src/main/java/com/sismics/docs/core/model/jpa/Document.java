@@ -38,8 +38,8 @@ public class Document implements Loggable {
     /**
      * Language (ISO 639-9).
      */
-    //@Column(name = "DOC_LANGUAGE_C", nullable = false, length = 3)
-    //private String language;
+    @Column(name = "DOC_LANGUAGE_C", nullable = false, length = 3)
+    private String language;
     
     /**
      * Title.
@@ -127,7 +127,6 @@ public class Document implements Loggable {
         this.id = id;
     }
     
-        /**
     public String getLanguage() {
         return language;
     }
@@ -135,7 +134,7 @@ public class Document implements Loggable {
     public void setLanguage(String language) {
         this.language = language;
     }
-    */
+    
     public String getUserId() {
         return userId;
     }

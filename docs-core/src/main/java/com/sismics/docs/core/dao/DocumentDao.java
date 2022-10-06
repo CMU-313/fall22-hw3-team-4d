@@ -120,7 +120,7 @@ public class DocumentDao {
         documentDto.setRights((String) o[i++]);
         documentDto.setCreateTimestamp(((Timestamp) o[i++]).getTime());
         documentDto.setUpdateTimestamp(((Timestamp) o[i++]).getTime());
-        //documentDto.setLanguage((String) o[i++]);
+        documentDto.setLanguage((String) o[i++]);
         documentDto.setShared(((Number) o[i++]).intValue() > 0);
         documentDto.setFileCount(((Number) o[i++]).intValue());
         documentDto.setCreator((String) o[i]);
@@ -214,7 +214,7 @@ public class DocumentDao {
         documentDb.setCoverage(document.getCoverage());
         documentDb.setRights(document.getRights());
         documentDb.setCreateDate(document.getCreateDate());
-        //documentDb.setLanguage(document.getLanguage());
+        documentDb.setLanguage(document.getLanguage());
         documentDb.setFileId(document.getFileId());
         documentDb.setUpdateDate(new Date());
         
