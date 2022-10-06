@@ -27,6 +27,11 @@ public class DocumentDto {
     private String description;
     
     /**
+     * Description.
+     */
+    private String rating;
+
+    /**
      * Subject.
      */
     private String subject;
@@ -142,6 +147,14 @@ public class DocumentDto {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getRating() {
+        return rating;
+    }
+
+    public void setRating(String rating) {
+        this.rating = rating;
     }
 
     public String getSubject() {
