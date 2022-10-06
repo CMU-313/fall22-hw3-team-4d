@@ -40,7 +40,7 @@
       <div class="form-group" ng-class="{ 'has-error': !documentForm.rating.$valid && documentForm.$dirty }">
         <label class="col-sm-2 control-label" for="inputRating">{{ 'document.rating' | translate }}</label>
         <div class="col-sm-10">
-          <input required ng-maxlength="5" class="form-control" type="text" id="inputRating"
+          <input required ng-maxlength="1" class="form-control" type="text" id="inputRating"
             ng-attr-placeholder="{{ 'document.edit.rating_placeholder' | translate }}" name="rating" ng-model="document.rating" autocomplete="off"/>
         </div>
       </div>
