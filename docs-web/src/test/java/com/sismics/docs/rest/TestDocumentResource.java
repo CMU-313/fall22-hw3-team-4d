@@ -988,4 +988,52 @@ public class TestDocumentResource extends BaseJerseyTest {
         Assert.assertEquals("BOOLEAN", meta.getString("type"));
         Assert.assertTrue(meta.getBoolean("value"));
     }
+
+        /**
+     * Test new rating field 
+     */
+    @Test
+    public void testRatingField() {
+        // Login document10
+        clientUtil.createUser("document10");
+        String document10Token = clientUtil.login("document10");
+        JsonObject json = target().path("/tag").request()
+        .cookie(TokenBasedSecurityFilter.COOKIE_NAME, document10Token)
+        .put(Entity.form(new Form()
+                .param("name", "SuperTag10")
+                .param("color", "#ffff00")), JsonObject.class);
+        String tag10Id = json.getString("id");
+        Assert.assertNotNull(tag10Id);
+        // Create a document with document10
+        long create10Date = new Date().getTime();
+        json = target().path("/document").request()
+                .cookie(TokenBasedSecurityFilter.COOKIE_NAME, document10Token)
+                .put(Entity.form(new Form()
+                        .param("title", "My super title document 10")
+                        .param("description", "Student Alex needs a better rating")
+                        .param("rating", "5")
+                        .param("subject", "Subject document 1")
+                        .param("identifier", "Identifier document 1")
+                        .param("publisher", "Publisher document 1")
+                        .param("format", "Format document 1")
+                        .param("source", "Source document 1")
+                        .param("type", "Software")
+                        .param("coverage", "Greenland")
+                        .param("rights", "Public Domain")
+                        .param("tags", tag10Id)
+                        .param("language", "eng")
+                        .param("create_date", Long.toString(create10Date))), JsonObject.class);
+        String document10Id = json.getString("id");
+        Assert.assertNotNull(document10Id);
+
+        // Get Document10
+        json = target().path("/document/" + document10Id).request()
+                .cookie(TokenBasedSecurityFilter.COOKIE_NAME, document10Token)
+                .get(JsonObject.class);
+        Assert.assertEquals(document10Id, json.getString("id"));
+        Assert.assertEquals("document10", json.getString("creator"));
+        Assert.assertEquals("My super title document 10", json.getString("title"));
+        Assert.assertEquals("Student Alex needs a better rating", json.getString("description"));
+        Assert.assertEquals("5", json.getString("rating"));
+    }
 }
