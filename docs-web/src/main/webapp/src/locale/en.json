@@ -158,7 +158,7 @@
       "primary_metadata": "Student Application",
       "title_placeholder": "Full name of student",
       "description_placeholder": "Comments about the student",
-      "rating_placeholder": "Rating of student (1-5, Poor-Excellent)",
+      "rating_placeholder": "Rating of student (0-9, Poor-Excellent)",
       "new_files": "New files",
       "orphan_files": "+ {{ count }} file{{ count > 1 ? 's' : '' }}",
       "additional_metadata": "Additional metadata",
